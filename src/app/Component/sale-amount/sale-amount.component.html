@@ -1,0 +1,22 @@
+<div class="mb-4 d-flex align-items-center">
+  <label class="me-3 mb-0">
+    1. Total value of taxable electronic service exclusive of VAT
+  </label>
+
+  <div class="position-relative end-0" style="width: 250px; align-items: end;">
+    <input 
+      id="saleAmount" 
+      type="text" 
+      class="form-control text-end pe-5" 
+      placeholder="0.00"      
+      (focus)="onSaleFocus()"
+      (blur)="onSaleBlur()" 
+      [(ngModel)]="saleAmount"
+    />
+    <span
+      class="position-absolute top-50 end-0 translate-middle-y me-2 text-muted"
+    >
+      THB
+    </span>
+  </div>
+</div>

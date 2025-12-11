@@ -1,0 +1,30 @@
+<app-header></app-header>
+<div class="container mx-auto px-4">
+  <div><h3>1. Tax Filling Detail</h3></div>
+  <hr />
+
+  <app-filing-type></app-filing-type>
+  <div class="flex gap-4 items-end">
+    <app-month></app-month>
+    <app-year></app-year>
+  </div>
+  <div><h3>2. Tax Computation</h3></div>
+  <hr />
+  <div><h5>Provide total value taxable electronic service *</h5></div>
+  <app-sale-amount></app-sale-amount>
+  <app-tax-amount></app-tax-amount>
+</div>
+  <button
+    id="backBtn"
+    class="bg-white text-black font-bold py-2 px-4 rounded mt-1"
+    onclick="handleBack()"
+  >
+    Back
+  </button>
+  <button
+    id="submitBtn"
+    class="bg-black text-white font-bold py-2 px-4 rounded mt-1"
+    onclick="handleSubmit()"
+  >
+    Next
+  </button>
