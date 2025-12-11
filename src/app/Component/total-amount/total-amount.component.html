@@ -1,14 +1,22 @@
-                    <div id="totalContainer" class="mb-4">
-                        <label class="block text-sm mb-2 font-semibold">
-                            Total Amount Payable
-                        </label>
-                        <div class="relative">
-                            <input
-                                type="text"
-                                id="totalAmount"
-                                readonly
-                                class="border rounded px-4 py-2 w-full text-right bg-gray-50 font-semibold pr-16"
-                            />
-                            <span class="absolute right-4 top-2 text-gray-400">THB</span>
-                        </div>
-                    </div>
+<div class="mb-4 d-flex align-items-center">
+  <label class="me-3 mb-0">
+    5. Total amount of VAT,surcharge,and penalty to be remitted (2.+3.+4.)
+  </label>
+  <div class="position-relative" style="width: 270px; margin-left: auto">
+    <input
+      type="text"
+      id="totalAmount"
+      readonly
+      placeholder="0.00"
+
+      class="form-control text-end pe-5"
+      style="background-color: rgb(240, 238, 238)"
+
+    />
+    <span
+      class="position-absolute top-50 end-0 translate-middle-y me-2 text-muted"
+    >
+      THB</span
+    >
+  </div>
+</div>

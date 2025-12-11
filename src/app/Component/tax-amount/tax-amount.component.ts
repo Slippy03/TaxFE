@@ -1,38 +1,63 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TaxService } from '../../Service/tax.service';
 
 @Component({
   selector: 'app-tax-amount',
   standalone: true,
   imports: [FormsModule],
   templateUrl: './tax-amount.component.html',
-  styleUrl: './tax-amount.component.css'
+  styleUrl: './tax-amount.component.css',
 })
 export class TaxAmountComponent {
-taxAmount: string = '';
+  taxAmount: string = '';
 
-onTaxFocus() {
-  if (!this.taxAmount) return;
+  constructor(private shared: TaxService) {}
 
-  this.taxAmount = this.taxAmount.replace(/,/g, '');
-}
+  ngOnInit() {
+    this.shared.saleAmount$.subscribe((value) => {
+      if (!value) {
+        this.taxAmount = '';
+        return;
+      }
 
-onTaxBlur() {
-  if (!this.taxAmount) return;
+      const raw = value.replace(/,/g, '');
+      const num = parseFloat(raw);
 
-  const raw = this.taxAmount.replace(/,/g, '');
+      if (isNaN(num)) {
+        this.taxAmount = '';
+        this.shared.setTaxAmount('');
 
-  if (isNaN(Number(raw))) {
-    this.taxAmount = '';
-    return;
+        return;
+      }
+
+      const tax = num * 0.07;
+
+      this.taxAmount = tax.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+      this.shared.setTaxAmount(this.taxAmount);
+    });
   }
 
-  const num = parseFloat(raw);
+  onTaxFocus() {
+    if (!this.taxAmount) return;
 
-  this.taxAmount = num.toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+    this.taxAmount = this.taxAmount.replace(/,/g, '');
+  }
+
+  onTaxBlur() {
+    if (!this.taxAmount) return;
+
+    const raw = this.taxAmount.replace(/,/g, '');
+
+    if (isNaN(Number(raw))) {
+      this.taxAmount = '';
+      this.shared.setTaxAmount(''); 
+
+      return;
+    }
+  }
 }
 
-}

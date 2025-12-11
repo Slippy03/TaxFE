@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TaxService } from '../../Service/tax.service';
 
 @Component({
   selector: 'app-surcharge',
@@ -9,4 +10,32 @@ import { Component } from '@angular/core';
 })
 export class SurchargeComponent {
 
+  surcharge: string = "";
+
+  constructor(private shared: TaxService) {}
+
+  ngOnInit() {
+    this.shared.taxAmount$.subscribe(value => {
+
+      if (!value) {
+        this.surcharge = "";
+        return;
+      }
+
+      const raw = value.replace(/,/g, '');
+      const num = parseFloat(raw);
+
+      if (isNaN(num)) {
+        this.surcharge = "";
+        return;
+      }
+
+      const sc = num * 0.1;
+
+      this.surcharge = sc.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    });
+  }
 }

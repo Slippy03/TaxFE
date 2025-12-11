@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TaxService } from '../../Service/tax.service';
 
 @Component({
   selector: 'app-sale-amount',
@@ -10,9 +11,12 @@ import { FormsModule } from '@angular/forms';
 })
 export class SaleAmountComponent {
 saleAmount: string = '';
-
+    constructor(private shared: TaxService) {}
+    
 onSaleFocus() {
   if (!this.saleAmount) return;
+
+
 
   this.saleAmount = this.saleAmount.replace(/,/g, '');
 }
@@ -21,6 +25,7 @@ onSaleBlur() {
   if (!this.saleAmount) return;
 
   const raw = this.saleAmount.replace(/,/g, '');
+  this.shared.setSaleAmount(this.saleAmount);
 
   if (isNaN(Number(raw))) {
     this.saleAmount = '';
