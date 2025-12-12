@@ -10,6 +10,7 @@ import { PenaltyComponent } from "../Component/penalty/penalty.component";
 import { TotalAmountComponent } from "../Component/total-amount/total-amount.component";
 import { TaxService } from '../Service/tax.service';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-screen',
@@ -62,6 +63,7 @@ export class ScreenComponent {
   }
 
   goNext() {
+    if (!this.validateSelect()) return; 
     this.screenState = 2;
   }
 
@@ -78,7 +80,6 @@ export class ScreenComponent {
     return this.month ? months[this.month - 1] : '';
   }
 
-
   get taxData() {
     return {
       filingType: this.filingType,
@@ -93,6 +94,7 @@ export class ScreenComponent {
   }
 
   openTaxDataModal() {
+    if (!this.validateSelect()) return; 
     this.modalInstance = new (window as any).bootstrap.Modal(this.taxDataModal.nativeElement);
     this.modalInstance.show();
   }
@@ -101,5 +103,21 @@ export class ScreenComponent {
     if (this.modalInstance) {
       this.modalInstance.hide();
     }
+  }
+
+  validateSelect(): boolean {
+    if (!this.filingType || this.filingType === '') {
+      Swal.fire('Warning', 'Please select a Filing Type!', 'warning');
+      return false;
+    }
+    if (!this.month) {
+      Swal.fire('Warning', 'Please select a Month!', 'warning');
+      return false;
+    }
+    if (!this.year) {
+      Swal.fire('Warning', 'Please select a Year!', 'warning');
+      return false;
+    }
+    return true;
   }
 }
