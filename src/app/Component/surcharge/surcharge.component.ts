@@ -6,19 +6,18 @@ import { TaxService } from '../../Service/tax.service';
   standalone: true,
   imports: [],
   templateUrl: './surcharge.component.html',
-  styleUrl: './surcharge.component.css'
+  styleUrl: './surcharge.component.css',
 })
 export class SurchargeComponent {
-
-  surcharge: string = "";
+  surcharge: string = '';
 
   constructor(private shared: TaxService) {}
 
   ngOnInit() {
-    this.shared.taxAmount$.subscribe(value => {
-
+    this.shared.taxAmount$.subscribe((value) => {
       if (!value) {
-        this.surcharge = "";
+        this.surcharge = '';
+        this.shared.setSurcharge(''); 
         return;
       }
 
@@ -26,7 +25,8 @@ export class SurchargeComponent {
       const num = parseFloat(raw);
 
       if (isNaN(num)) {
-        this.surcharge = "";
+        this.surcharge = '';
+        this.shared.setSurcharge('');
         return;
       }
 
@@ -34,8 +34,10 @@ export class SurchargeComponent {
 
       this.surcharge = sc.toLocaleString('en-US', {
         minimumFractionDigits: 2,
-        maximumFractionDigits: 2
+        maximumFractionDigits: 2,
       });
+
+      this.shared.setSurcharge(this.surcharge); 
     });
   }
 }

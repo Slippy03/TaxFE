@@ -3,17 +3,19 @@
     1. Total value of taxable electronic service exclusive of VAT
   </label>
 
-  <div class="position-relative" style="width: 250px; margin-left: auto;">
-    <input 
-      id="saleAmount" 
+  <div class="position-relative" style="width: 250px; margin-left: auto">
+    <input
+      id="saleAmount"
       type="text"
       class="form-control text-end pe-5"
       placeholder="0.00"
       (focus)="onSaleFocus()"
-      (blur)="onSaleBlur()" 
+      (blur)="onSaleBlur()"
       [(ngModel)]="saleAmount"
     />
-    <span class="position-absolute top-50 end-0 translate-middle-y me-2 text-muted">
+    <span
+      class="position-absolute top-50 end-0 translate-middle-y me-2 text-muted"
+    >
       THB
     </span>
   </div>

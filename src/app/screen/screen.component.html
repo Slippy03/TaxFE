@@ -1,38 +1,209 @@
 <app-header></app-header>
-<div class="container mx-auto px-4">
-  <div><h3>1. Tax Filling Detail</h3></div>
-  <hr />
-
-  <app-filing-type></app-filing-type>
-  <div class="flex gap-4 items-end">
-    <app-month></app-month>
-    <app-year></app-year>
+<div class="d-flex align-items-center justify-content-center">
+  <div class="text-center">
+    <i class="bi bi-1-circle-fill fs-2"></i>
   </div>
-  <div><h3>2. Tax Computation</h3></div>
-  <hr />
-  <div><h6>Provide total value taxable electronic service  *</h6></div>
-  <app-sale-amount></app-sale-amount>
-  <app-tax-amount></app-tax-amount>
-  <div><h6>In case of filling and payment,or additional filling</h6></div>
-  <app-surcharge></app-surcharge>
-  <app-penalty></app-penalty>
-  <app-total-amount></app-total-amount>
 
+  <div
+    class="flex-grow-1 mx-2"
+    style="max-width: 200px; height: 2px"
+    [ngClass]="{
+      'bg-dark bg-opacity-25': screenState === 1,
+      'bg-dark': screenState === 2
+    }"
+  ></div>
+
+  <div class="text-center">
+    <i
+      [ngClass]="{
+        'bi bi-2-circle': screenState === 1,
+        'bi bi-2-circle-fill': screenState === 2
+      }"
+      class="fs-2"
+    ></i>
+  </div>
 </div>
 
-<div class="mx-auto mt-4 flex justify-end gap-3" style="max-width: 900px;">
-  <button
-    id="backBtn"
-    class="bg-white text-black font-bold py-2 px-4 rounded"
-    onclick="handleBack()"
+<div *ngIf="screenState === 1">
+  <div class="container form-wrapper">
+    <div class="mb-6">
+      <h3 class="text-xl font-bold">1. Tax Filing Detail</h3>
+      <hr class="mb-4" />
+
+      <app-filing-type></app-filing-type>
+
+      <div class="month-year-row">
+        <app-month></app-month>
+        <app-year></app-year>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="text-xl font-bold">2. Tax Computation</h3>
+      <hr class="mb-4" />
+
+      <h6 class="mb-2">
+        Provide total value taxable electronic service
+        <span style="color: red">*</span>
+      </h6>
+
+      <app-sale-amount></app-sale-amount>
+      <app-tax-amount></app-tax-amount>
+
+      <div *ngIf="filingType === '1'" class="mt-4">
+        <h6 class="mb-2">
+          In case of filling and payment, or additional filling
+        </h6>
+
+        <app-surcharge></app-surcharge>
+        <app-penalty></app-penalty>
+        <app-total-amount></app-total-amount>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="absolute flex justify-end gap-3"
+    style="
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      right: 0;
+      left: 0;
+      position: relative;
+      top: 5px;
+    "
   >
-    Back
-  </button>
-  <button
-    id="submitBtn"
-    class="bg-black text-white font-bold py-2 px-4 rounded"
-    onclick="handleSubmit()"
+    <button
+      class="bg-white text-black font-bold py-2 px-4 rounded-pill"
+      style="margin-right: 15px"
+      (click)="goBack()"
+    >
+      Back
+    </button>
+
+    <button
+      class="bg-black text-white font-bold py-2 px-4 rounded-pill"
+      (click)="goNext()"
+    >
+      Next
+    </button>
+  </div>
+</div>
+
+<div *ngIf="screenState === 2">
+  <div class="container mx-auto px-6 py-10">
+    <div class="mb-8">
+      <h3 class="text-xl font-bold mb-4">Tax Filing Detail</h3>
+      <hr class="mb-4" />
+
+      <div class="flex justify-between items-start mb-3">
+        <div>
+          <h6 class="font-medium text-gray-600">Type of filing</h6>
+          <h6 class="font-semibold">
+            {{ filingType === "0" ? "Ordinary Filing" : "Additional Filing" }}
+          </h6>
+        </div>
+        <div class="text-right">
+          <h6 class="font-medium text-gray-600">VAT Month</h6>
+          <h6 class="font-semibold">{{ getMonthName() }} {{ year }}</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-8">
+      <h3 class="text-xl font-bold mb-4 mt-4">Tax Computation</h3>
+      <hr class="mb-4" />
+
+      <div class="tax-grid">
+        <div>Total value of taxable electronic service exclusive of VAT</div>
+        <div class="text-right">{{ saleAmount }} THB</div>
+
+        <div>
+          Total VAT to be remitted
+          <div class="text-sm text-gray-500">
+            (7% of taxable electronic service)
+          </div>
+        </div>
+        <div class="text-right">{{ taxAmount }} THB</div>
+
+        <div *ngIf="filingType === '1'">Surcharge</div>
+        <div *ngIf="filingType === '1'" class="text-right">
+          {{ surcharge }} THB
+        </div>
+
+        <div *ngIf="filingType === '1'">Penalty</div>
+        <div *ngIf="filingType === '1'" class="text-right">
+          {{ penalty }} THB
+        </div>
+
+        <div>Total Amount Payable</div>
+        <div class="text-right">
+          {{ totalAmount === "0.00" ? taxAmount : totalAmount }} THB
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3 class="text-xl font-bold mb-4 mt-4">Declaration</h3>
+      <hr class="mb-4" />
+      <p class="text-gray-600 leading-6">
+        I hereby certify that information given above are true and correct and
+        agree to be bound by such information.
+      </p>
+    </div>
+  </div>
+
+  <div
+    class="absolute flex justify-end gap-3"
+    style="
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      right: 0;
+      left: 0;
+      position: relative;
+      top: 5px;
+    "
   >
-    Next
-  </button>
+    <button
+      class="bg-white text-black font-bold py-2 px-4 rounded-pill"
+      style="margin-right: 15px"
+      (click)="goBack()"
+    >
+      Back
+    </button>
+    <button
+      class="bg-black text-white font-bold py-2 px-4 rounded-pill"
+      (click)="openTaxDataModal()"
+    >
+      Confirm and Submit
+    </button>
+
+    <div class="modal fade" tabindex="-1" #taxDataModal>
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Tax Data JSON</h5>
+            <button
+              type="button"
+              class="btn-close"
+              (click)="closeModal()"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <pre>{{ taxData | json }}</pre>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="closeModal()"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

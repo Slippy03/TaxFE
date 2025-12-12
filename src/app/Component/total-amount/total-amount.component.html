@@ -1,22 +1,19 @@
 <div class="mb-4 d-flex align-items-center">
   <label class="me-3 mb-0">
-    5. Total amount of VAT,surcharge,and penalty to be remitted (2.+3.+4.)
+    5. Total amount of VAT, surcharge, and penalty to be remitted (2.+3.+4.)
   </label>
-  <div class="position-relative" style="width: 270px; margin-left: auto">
+  <div class="position-relative" style="width: 250px; margin-left: auto">
     <input
       type="text"
       id="totalAmount"
+      [value]="totalAmount"
       readonly
       placeholder="0.00"
-
       class="form-control text-end pe-5"
       style="background-color: rgb(240, 238, 238)"
-
     />
     <span
       class="position-absolute top-50 end-0 translate-middle-y me-2 text-muted"
-    >
-      THB</span
-    >
+    >THB</span>
   </div>
 </div>

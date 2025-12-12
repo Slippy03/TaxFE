@@ -1,22 +1,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap');
-body {
-    font-family: 'Prompt', sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-
 .container {
   border: #333 solid 1px;
-    max-width: 800px;
-    margin: 50px auto;
-    margin-bottom: 10px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px 30px;
-    font-family: 'Prompt', sans-serif;
+  max-width: 900px;
+  margin: 50px auto;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px 30px;
+  font-family: 'Prompt', sans-serif;
+}
 
+.form-wrapper {
+  margin-bottom: 40px;
+}
+
+.summary-wrapper {
+  padding: 40px 30px;
+}
+
+.month-year-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+}
+.flex.justify-between > h6.text-right {
+  min-width: 120px; 
+  text-align: right;
+}
+.tax-grid {
+  display: grid;
+  grid-template-columns: 1fr 150px; 
+  row-gap: 0.5rem;
+  align-items: center; 
+}
+
+.tax-grid .text-right {
+  text-align: right;
 }
 
 
+app-month, app-year {
+  margin: 0; 
+}
